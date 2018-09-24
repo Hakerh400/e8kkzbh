@@ -1,0 +1,23 @@
+*{
+  overflow: hidden;
+  outline: none;
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active{
+  color: blue;
+  text-decoration: none;
+}
+
+.has-canvas{
+  margin: 0px;
+}
+
+::-webkit-scrollbar{
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
