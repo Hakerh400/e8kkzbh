@@ -1,0 +1,10 @@
+{
+  "name": "test",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "engines": {
+    "node": "10.10.0"
+  }
+}
