@@ -21,6 +21,8 @@ async function main(){
   port = process.env.PORT || DEFAULT_PORT;
   server.listen(port);
 
+  console.log('PORT______: ' + port);
+
   server.on('error', console.log);
 
   global.O = await require('./framework.js')(REMOTE);
@@ -28,7 +30,6 @@ async function main(){
 
 async function onReq(req, res){
   req.on('error', console.log);
-  return;
 
   if(O === null) return err('The server is not ready yet');
   if(req.method !== 'POST') return err('Request\'s method must be POST');
