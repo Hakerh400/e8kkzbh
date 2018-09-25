@@ -25,6 +25,8 @@ async function main(){
 }
 
 async function onReq(req, res){
+  req.on('error', O.nop);
+
   if(O === null) return err('The server is not ready yet');
   if(req.method !== 'POST') return err('Request\'s method must be POST');
 
