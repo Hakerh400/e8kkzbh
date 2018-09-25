@@ -1,7 +1,7 @@
 'use strict';
 
-const VERSION = 1;
-const REMOTE = 0;
+const REMOTE = 1;
+const VERSION = 2;
 
 const http = require('http');
 const dataProcessor = require('./data-processor');
@@ -25,6 +25,8 @@ async function main(){
 }
 
 async function onReq(req, res){
+  req.on('error', console.log);
+
   if(O === null) return err('The server is not ready yet');
   if(req.method !== 'POST') return err('Request\'s method must be POST');
 
