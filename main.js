@@ -7,9 +7,7 @@ const http = require('http');
 const https = require('https');
 const dataProcessor = require('./data-processor');
 
-const SERVER_URL = 'https://e8kkzbh.github.io/';
 const DEFAULT_PORT = 5000;
-const PING_INTERVAL = 5e3;
 
 var server = null;
 var port = null;
@@ -25,8 +23,6 @@ async function main(){
   server.listen(port);
 
   global.O = await require('./framework.js')(REMOTE);
-
-  ping();
 }
 
 async function onReq(req, res){
@@ -68,13 +64,5 @@ function getReqData(req){
 
     req.on('data', buff => buffs.push(buff));
     req.on('end', () => res(Buffer.concat(buffs)));
-  });
-}
-
-function ping(){
-  https.get(SERVER_URL, res => {
-    res.on('end', () => {
-      setTimeout(ping, PING_INTERVAL);
-    });
   });
 }
