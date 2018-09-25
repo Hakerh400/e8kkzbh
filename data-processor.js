@@ -23,7 +23,7 @@ async function process(data){
     case 'post_msg':
       var {name, msg} = data;
       if(typeof name !== 'string' || typeof msg !== 'string')
-        throw 'Parameters "name" and "msg" must be strings'
+        throw 'Parameters "name" and "msg" must be strings';
 
       var id = msgs.length;
       var date = Date.now();
