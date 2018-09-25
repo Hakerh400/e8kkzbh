@@ -1,5 +1,8 @@
 'use strict';
 
+const REMOTE = 1;
+const VERSION = 1;
+
 const http = require('http');
 const dataProcessor = require('./data-processor');
 
@@ -18,7 +21,7 @@ async function main(){
   port = process.env.PORT || DEFAULT_PORT;
   server.listen(port);
 
-  global.O = await require('./framework.js');
+  global.O = await require('./framework.js')(REMOTE);
 }
 
 async function onReq(req, res){
@@ -29,6 +32,10 @@ async function onReq(req, res){
 
   try{ var json = JSON.parse(String(data)); }
   catch(error){ return err(error.message); }
+
+  if(typeof json !== 'object') return err('JSON value most be an object');
+  if(json === null) return err('JSON value can\'t be null');
+  if(json.v !== VERSION) return err('Version mismatch');
 
   dataProcessor.process(json)
     .then(send)

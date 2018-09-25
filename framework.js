@@ -1,10 +1,7 @@
 'use strict';
 
-const FRAMEWORK_URL = 'https://raw.githubusercontent.com/Hakerh400/browser-projects/master/framework.js';
-
+const http = require('http');
 const https = require('https');
-
-setGlobalVars();
 
 class Window{
   constructor(){
@@ -15,6 +12,10 @@ class Window{
 class Document{
   constructor(){}
 };
+
+setGlobalVars();
+
+module.exports = getFramework;
 
 function setGlobalVars(){
   global.require = (...args) => {
@@ -32,7 +33,10 @@ function setGlobalVars(){
   };
 }
 
-async function getFramework(){
+async function getFramework(remote){
+  const FRAMEWORK_URL = remote ? 'https://raw.githubusercontent.com/Hakerh400/browser-projects/master/framework.js'
+                               : 'http://localhost/framework.js';
+
   var data = await get(FRAMEWORK_URL);
 
   var str = data.toString();
@@ -52,7 +56,9 @@ async function getFramework(){
 
 function get(url){
   return new Promise(resolve => {
-    https.get(url, res => {
+    var type = url.startsWith('https') ? https : http;
+    
+    type.get(url, res => {
       var buffs = [];
 
       res.on('data', buff => buffs.push(buff));
@@ -60,5 +66,3 @@ function get(url){
     });
   });
 }
-
-module.exports = getFramework();
