@@ -1,7 +1,7 @@
 'use strict';
 
-const REMOTE = 1;
-const VERSION = 1;
+const REMOTE = 0;
+const VERSION = 2;
 
 const http = require('http');
 const dataProcessor = require('./data-processor');
