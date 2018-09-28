@@ -7,7 +7,7 @@ const http = require('http');
 const https = require('https');
 const dataProcessor = require('./data-processor');
 
-const DEFAULT_PORT = 5000;
+const DEFAULT_PORT = 8080;
 
 var server = null;
 var port = null;
@@ -21,8 +21,6 @@ async function main(){
 
   port = process.env.PORT || DEFAULT_PORT;
   server.listen(port);
-
-  console.log(process.env);
 
   global.O = await require('./framework.js')(REMOTE);
 }
