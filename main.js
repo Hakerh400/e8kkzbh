@@ -7,7 +7,7 @@ const http = require('http');
 const https = require('https');
 const dataProcessor = require('./data-processor');
 
-const DEFAULT_PORT = 8080;
+const DEFAULT_PORT = 80;
 
 var server = null;
 var port = null;
