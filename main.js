@@ -22,6 +22,8 @@ async function main(){
   port = process.env.PORT || DEFAULT_PORT;
   server.listen(port);
 
+  server.on('error', console.log);
+
   global.O = await require('./framework.js')(REMOTE);
 }
 
