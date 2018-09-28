@@ -21,6 +21,8 @@ async function main(){
   server = http.createServer(onReq);
   server.listen(DEFAULT_PORT, DEFAULT_IP);
 
+  console.log(DEFAULT_PORT, DEFAULT_IP);
+
   server.on('error', err => {
     console.log(err);
     setTimeout(() => {}, 1e9);
