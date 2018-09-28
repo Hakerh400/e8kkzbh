@@ -26,7 +26,6 @@ async function main(){
 }
 
 async function onReq(req, res){
-  console.log('REQUEST');
   req.on('error', console.log);
 
   if(O === null) return err('The server is not ready yet');
