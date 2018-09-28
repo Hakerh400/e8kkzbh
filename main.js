@@ -7,7 +7,7 @@ const http = require('http');
 const https = require('https');
 const dataProcessor = require('./data-processor');
 
-const DEFAULT_IP = '0.0.0.0'//'127.0.0.1';
+const DEFAULT_IP = '0.0.0.0';
 const DEFAULT_PORT = 8080;
 
 var server = null;
@@ -18,7 +18,7 @@ setTimeout(main);
 async function main(){
   global.O = null;
 
-  server = http.createServer(onReq);
+  server = https.createServer(onReq);
   server.listen(DEFAULT_PORT, DEFAULT_IP);
 
   console.log(DEFAULT_PORT, DEFAULT_IP);
