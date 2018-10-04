@@ -1,7 +1,7 @@
 'use strict';
 
 const REMOTE = 1;
-const VERSION = 2;
+const VERSION = 3;
 
 const http = require('http');
 const https = require('https');
