@@ -13,7 +13,7 @@ const FORCE_EXIT = 1;
 const DEFAULT_IP = '0.0.0.0';
 const DEFAULT_PORT = 8080;
 
-const HTTP_METHOD = 'GET';
+const HTTP_METHOD = 'POST';
 
 var dataProcessor = null;
 
