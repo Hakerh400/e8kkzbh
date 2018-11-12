@@ -23,7 +23,7 @@ function setGlobalVars(){
       throw new TypeError('Expected 1 argument');
     
     var arg = args[0];
-    if(typeof args[0] !== 'string')
+    if(typeof arg !== 'string')
       throw new TypeError('Expected a string');
 
     if(/[\.\/\\]/.test(arg))
@@ -36,7 +36,7 @@ function setGlobalVars(){
 async function getFramework(remote){
   const FRAMEWORK_URL = remote ? 'https://raw.githubusercontent.com/Hakerh400/browser-projects/master/framework.js'
                                : 'http://localhost/framework.js';
-
+  
   var data = await get(FRAMEWORK_URL);
 
   var str = data.toString();
