@@ -13,6 +13,8 @@ const FORCE_EXIT = 1;
 const DEFAULT_IP = '0.0.0.0';
 const DEFAULT_PORT = 8080;
 
+const HTTP_METHOD = 'GET';
+
 var dataProcessor = null;
 
 var ready = 0;
@@ -44,8 +46,6 @@ function aels(){
 
 async function onLoad(){
   dataProcessor = require('./data-processor');
-
-  setInterval(O.nop, 1e3);
   ready = 1;
 }
 
@@ -61,7 +61,7 @@ async function onReq(req, res){
   req.on('error', console.log);
 
   if(!ready) return err('The server is not ready yet');
-  if(req.method !== 'POST') return err('Request\'s method must be POST');
+  if(req.method !== HTTP_METHOD) return err(`Request's method must be ${HTTP_METHOD}`);
 
   var data = await getReqData(req);
 
