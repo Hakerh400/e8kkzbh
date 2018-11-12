@@ -44,6 +44,8 @@ function aels(){
 
 async function onLoad(){
   dataProcessor = require('./data-processor');
+
+  setInterval(O.nop, 1e3);
   ready = 1;
 }
 
