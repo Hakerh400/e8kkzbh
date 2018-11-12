@@ -58,6 +58,8 @@ function onInput(buf){
 }
 
 async function onReq(req, res){
+  console.log('Got request...');
+
   req.on('error', console.log);
 
   if(!ready) return err('The server is not ready yet');
