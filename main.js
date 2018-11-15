@@ -6,7 +6,7 @@ const http = require('http');
 const https = require('https');
 
 const REMOTE = 1;
-const VERSION = 9;
+const VERSION = '1.0.0';
 
 const FORCE_EXIT = 1;
 
