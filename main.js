@@ -24,11 +24,11 @@ var server = null;
 setTimeout(main);
 
 async function main(){
-  console.log(fs.readdirSync('/'));
-  fs.stat('/pvc-09a75782-f303-11e8-bb5d-02ac3a1f9d61', (err, obj) => {
+  fs.stat('/var/export', (err, obj) => {
     if(err) return console.log(err);
     console.log(obj.isFile());
     console.log(obj.isDirectory());
+    console.log(fs.readdirSync('/var/export'));
   });
   setInterval(()=>{});
   return;
