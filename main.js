@@ -24,6 +24,7 @@ var server = null;
 setTimeout(main);
 
 async function main(){
+  console.log(fs.readdirSync('/'));
   fs.stat('/pvc-09a75782-f303-11e8-bb5d-02ac3a1f9d61', (err, obj) => {
     if(err) return console.log(err);
     console.log(obj.isFile());
