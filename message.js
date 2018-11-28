@@ -2,15 +2,16 @@
 
 const fs = require('fs');
 const path = require('path');
+const O = require('omikron');
 
 class Message{
-  constructor(id, name, msg, date){
+  constructor(id, name, msg, date, seen=[name]){
     this.id = id;
     this.name = name;
     this.msg = msg;
     this.date = date;
 
-    this.seen = new Set([name]);
+    this.seen = new Set(seen);
   }
 
   see(name){
@@ -25,6 +26,11 @@ class Message{
       date: this.date,
       seen: Array.from(this.seen),
     };
+  }
+
+  static deserialize(msg){
+    var {id, name, msg, date, seen} = msg;
+    return new Message(id, name, msg, date, seen);
   }
 
   toJSON(){ return this.serialize(); }

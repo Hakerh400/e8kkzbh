@@ -1,39 +1,33 @@
 'use strict';
 
+const REMOTE = 0;
+const VERSION = '2.0.0';
+
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const https = require('https');
+const O = require('omikron');
 
-const REMOTE = 1;
-const VERSION = '1.0.0';
+O.PVC = REMOTE ? '/data'
+               : 'D:/Data/e8kkzbh';
+
+const dataProcessor = require('./data-processor');
 
 const FORCE_EXIT = 1;
 
 const DEFAULT_IP = '0.0.0.0';
 const DEFAULT_PORT = 8080;
-
 const HTTP_METHOD = 'POST';
 
-var dataProcessor = null;
+const M = VERSION.match(/^\d+/) | 0;
 
 var ready = 0;
-
 var server = null;
 
 setTimeout(main);
 
-async function main(){
-  fs.stat('/var/export', (err, obj) => {
-    if(err) return console.log(err);
-    console.log(obj.isFile());
-    console.log(obj.isDirectory());
-    console.log(fs.readdirSync('/var/export'));
-  });
-  setInterval(()=>{});
-  return;
-  global.O = null;
-
+function main(){
   aels();
 
   server = http.createServer(onReq);
@@ -43,32 +37,49 @@ async function main(){
     console.log(err);
     setInterval(() => {}, 1e3);
   });
-
-  global.O = await require('./framework.js')(REMOTE);
-  await onLoad();
 }
 
 function aels(){
-  process.stdin.on('data', onInput);
+  var lines = [];
+  var str = '';
+
+  process.stdin.on('data', buf => {
+    str = (str + buf).replace(/([\s\S]*?)(?:\r\n|\r|\n)/g, (match, line) => {
+      onInput(line);
+      return '';
+    });
+  });
 }
 
-async function onLoad(){
-  dataProcessor = require('./data-processor');
-  ready = 1;
-}
+function onInput(str){
+  var [cmd, ...args] = str.split(' ');
+  var arg = args.join(' ');
 
-function onInput(buf){
-  if(buf.includes(0x03)){
-    process.stdin.removeListener('data', onInput);
-    process.stdin.unref();
-    exit();
+  switch(cmd){
+    case '': break;
+
+    case 'exit': case '.exit': case 'q': case ':q':
+      process.stdin.removeListener('data', onInput);
+      process.stdin.unref();
+      exit();
+      break;
+
+    case 'load':
+      dataProcessor.load(arg);
+      break;
+
+    case 'clear':
+      dataProcessor.clear();
+      break;
+
+    default:
+      log('Unknown command');
+      break;
   }
 }
 
 async function onReq(req, res){
   req.on('error', console.log);
-
-  if(!ready) return err('The server is not ready yet');
   if(req.method !== HTTP_METHOD) return err(`Request's method must be ${HTTP_METHOD}`);
 
   var data = await getReqData(req);
@@ -85,6 +96,8 @@ async function onReq(req, res){
     .catch(err);
 
   function err(msg){
+    if(msg instanceof Error)
+      msg = msg.toString();
     send(msg, 0);
   }
 

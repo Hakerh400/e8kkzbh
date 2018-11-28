@@ -4,16 +4,51 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const Message = require('./message');
+const O = require('omikron');
 
 const HASH = '0f7cd040e65380fecde5e918012663e3bcdda941b925e8b7f8d61841ecde7466';
-
 const SECRET_KEY = genSecretKey();
+
+const msgsFile = path.join(O.PVC, 'messages.json');
 
 var msgs = [];
 
+load();
+
 module.exports = {
+  clear,
+  save,
+  load,
   process,
 };
+
+function clear(){
+  fs.writeFileSync(msgsFile, '[]');
+  msgs.length = 0;
+}
+
+function save(){
+  fs.writeFileSync(msgsFile, JSON.stringify(msgs));
+}
+
+function load(json=null){
+  if(json === null){
+    if(!fs.existsSync(msgsFile))
+      clear();
+    json = fs.readFileSync(msgsFile, 'utf8');
+  }
+
+  var arr = [];
+  try{ arr = JSON.parse(json); }catch{}
+
+  msgs.length = 0;
+  for(var msg of arr){
+    msg = Message.deserialize(msg);
+    msgs.push(msg);
+  }
+
+  save();
+}
 
 async function process(data){
   var {type} = data;
@@ -39,6 +74,8 @@ async function process(data){
       var id = msgs.length;
       var date = Date.now();
       msgs.push(new Message(id, name, msg, date));
+
+      save();
 
       return id;
       break;
