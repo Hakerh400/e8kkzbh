@@ -1,6 +1,6 @@
 'use strict';
 
-const REMOTE = 0;
+const REMOTE = 1;
 const VERSION = '2.0.0';
 
 const fs = require('fs');
