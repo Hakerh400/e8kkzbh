@@ -25,10 +25,11 @@ setTimeout(main);
 
 async function main(){
   fs.stat('/pvc-09a75782-f303-11e8-bb5d-02ac3a1f9d61', (err, obj) => {
-    if(err) throw err;
+    if(err) return console.log(err);
     console.log(obj.isFile());
     console.log(obj.isDirectory());
-  })
+  });
+  setInterval(()=>{});
   return;
   global.O = null;
 
