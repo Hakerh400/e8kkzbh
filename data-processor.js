@@ -72,7 +72,7 @@ async function process(data){
         throw 'Parameters "name" and "msg" must be strings';
 
       var id = msgs.length;
-      var date = Date.now();
+      var date = Date.now() / 1e3 | 0;
       msgs.push(new Message(id, name, msg, date));
 
       save();
